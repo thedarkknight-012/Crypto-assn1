@@ -7,7 +7,6 @@
   - EE22B173_CS6530_Assgn1_Part1.txt         (diffusion analysis log)
   - EE22B173_CS6530_Assgn1_Part1_Encrypted.bin
   - EE22B173_CS6530_Assgn1_Part1_Decrypted.bin
-  - EE22B173_CS6530_Assgn1_Part1_Readme.txt  (you should copy README contents provided separately)
   - EE22B173_CS6530_Assgn1_Part2.txt         (observations & verification info)
   - EE22B173_CS6530_Assgn1_Part3.txt         (performance comparison output)
 

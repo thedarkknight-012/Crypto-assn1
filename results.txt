@@ -1,4 +1,0 @@
-Benchmark Results (100MB Encryption)
------------------------------------
-Salsa20: ./bench_ref.sh: line 21: /usr/bin/time: No such file or directory
-ChaCha20: ./bench_ref.sh: line 24: /usr/bin/time: No such file or directory
