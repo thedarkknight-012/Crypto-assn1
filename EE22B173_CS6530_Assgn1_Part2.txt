@@ -1,0 +1,2 @@
+Encryption: input=EE22B173_CS6530_Assgn1_Part1_ChaCha.txt output=EE22B173_CS6530_Assgn1_Part1_ChaCha_Encrypted.bin cipher=ChaCha20 time=0.000022 seconds
+Verification: sizes differ original=1059 decrypted=164

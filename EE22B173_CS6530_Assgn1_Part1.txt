@@ -1,0 +1,19 @@
+Roll no: EE22B173
+Cipher: ChaCha20
+Key: all-zero (32 bytes)
+Nonce: all-zero (salsa:8, chacha:12)
+Counter pairs tested: (0 vs 1) and (173 vs 174)
+
+--- Counter 0 keystream (64 bytes) ---
+76b8e0ada0f13d90405d6ae55386bd28bdd219b8a08ded1aa836efcc8b770dc7da41597c5157488d7724e03fb8d84a376a43b8f41518a11cc387b669b2ee6586
+--- Counter 1 keystream (64 bytes) ---
+9f07e7be5551387a98ba977c732d080dcb0f29a048e3656912c6533e32ee7aed29b721769ce64e43d57133b074d839d531ed1f28510afb45ace10a1f4b794d6f
+Bit differences between counter 0 and 1: 270 bits (out of 512)
+
+--- Counter 173 keystream (64 bytes) ---
+3019ec05824604d0466ca8e70d1622a66804e8422eebba22fe37e3df9b7b4ed7f0aa72af0568af864309ffe49d72c2a9d778d65cdb601248606dc3f4114e6e0c
+--- Counter 174 keystream (64 bytes) ---
+6000438163bc384aca59f4ca024164aa3509cf7c3a37d5809dbd255402fc25ea8b48fe9172202d77de32aa35e8d46ef034a9e32fd24219d934df65efc6834942
+Bit differences between counter 173 and 174: 256 bits (out of 512)
+
+Notes: Key & Nonce are all-zero. Counters altered to check diffusion; measure number of bit differences.

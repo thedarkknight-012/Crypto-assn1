@@ -49,7 +49,7 @@ double now_seconds() {
    Command-line parsing
    --------------------------- */
 #define MAXPATH 1024
-typedef enum {MODE_DIFF, MODE_ENC, MODE_DEC, MODE_BENCH, MODE_HELP} run_mode_t;
+typedef enum {MODE_DIFF, MODE_ENC, MODE_DEC, MODE_BENCH, MODE_HELP,MODE_TEST} run_mode_t;
 typedef enum {CIPHER_SALSA, CIPHER_CHACHA} cipher_t;
 
 typedef struct {
@@ -281,9 +281,9 @@ int encrypt_file_with_keystream(
     size_t read;
     while ((read = fread(buf, 1, CHUNK, fin)) > 0) {
         if (use_salsa) {
-            generate_keystream_salsa(key, nonce_salsa8_or_chacha, block_counter, ks, read, detailed);
+            generate_keystream_salsa(key, nonce_salsa8_or_chacha12, block_counter, ks, read, detailed);
         } else {
-            generate_keystream_chacha(key, nonce_salsa8_or_chacha, block_counter, ks, read, detailed);
+            generate_keystream_chacha(key, nonce_salsa8_or_chacha12, block_counter, ks, read, detailed);
         }
         for (size_t i = 0; i < read; ++i) buf[i] ^= ks[i];
         size_t wrote = fwrite(buf, 1, read, fout);
@@ -438,6 +438,24 @@ void do_benchmark(cipher_t cipher, int detailed) {
 
     free(buf); free(ks);
 }
+void do_selftest() {
+    uint8_t key[32] = {0};
+    uint8_t nonce8[8] = {0};
+    uint8_t nonce12[12] = {0};
+    uint8_t out[64];
+
+    printf("=== Self-test (Salsa20/ChaCha20, all-zero key & nonce) ===\n");
+
+    salsa20_core(key, nonce8, 0, out, 0);
+    printf("Salsa20 block 0:\n"); print_hex(out, 64);
+
+    chacha20_block(key, nonce12, 0, out, 0);
+    printf("ChaCha20 block 0:\n"); print_hex(out, 64);
+
+    printf("Check against RFC 8439 test vectors (first 64 bytes)\n");
+    printf("If your outputs match, implementation is correct.\n");
+}
+
 
 /* ---------------------------
    Main driver
@@ -458,6 +476,7 @@ int main(int argc, char **argv) {
             ++i;
             if (strcmp(argv[i], "diff") == 0) opt.mode = MODE_DIFF;
             else if (strcmp(argv[i], "enc") == 0) opt.mode = MODE_ENC;
+            else if (strcmp(argv[i], "test") == 0) opt.mode = MODE_TEST;
             else if (strcmp(argv[i], "dec") == 0) opt.mode = MODE_DEC;
             else if (strcmp(argv[i], "bench") == 0) opt.mode = MODE_BENCH;
             else { fprintf(stderr, "unknown mode %s\n", argv[i]); return 1; }
@@ -478,6 +497,11 @@ int main(int argc, char **argv) {
             return 1;
         }
     }
+    if (opt.mode == MODE_TEST) {
+        do_selftest();
+        return 0;
+    }
+
 
     if (opt.mode == MODE_HELP) { print_help(); return 0; }
 

@@ -1,0 +1,2 @@
+Salsa20 benchmark: 100.00 MB processed in 0.734 sec => 136.19 MB/s
+ChaCha20 benchmark: 100.00 MB processed in 0.330 sec => 303.23 MB/s
